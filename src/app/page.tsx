@@ -1,103 +1,123 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Loader from "@/components/Loader";
+import Hero from "@/components/Hero";
+import OriginStory from "@/components/OriginStory";
+import Mindset from "@/components/Mindset";
+import SkillsNetwork from "@/components/SkillsNetwork";
+import MissionsSection from "@/components/MissionsSection";
+import Mathematics from "@/components/Mathematics";
+import CurrentlyBuilding from "@/components/CurrentlyBuilding";
+import DigitalWorkshop from "@/components/DigitalWorkshop";
+import ContactForm from "@/components/ContactForm";
+import { Terminal, ShieldAlert } from "lucide-react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [logoClicks, setLogoClicks] = useState(0);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  const handleLogoClick = () => {
+    const nextClicks = logoClicks + 1;
+    setLogoClicks(nextClicks);
+    if (nextClicks >= 5) {
+      setShowEasterEgg(true);
+      setLogoClicks(0);
+      
+      // Auto-hide easter egg after 5s
+      setTimeout(() => {
+        setShowEasterEgg(false);
+      }, 5000);
+    }
+  };
+
+  const handleScrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {!hasLoaded && (
+          <Loader key="loader" onComplete={() => setHasLoaded(true)} />
+        )}
+      </AnimatePresence>
+
+      {hasLoaded && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="relative min-h-screen w-full bg-background"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          {/* Floating Navigation Header */}
+          <header className="fixed top-6 left-6 right-6 z-[9980] flex justify-between items-center px-6 py-3.5 bg-zinc-950/80 border border-zinc-900 rounded-2xl backdrop-blur-md max-w-5xl mx-auto select-none pointer-events-auto shadow-[0_4px_30px_rgba(0,0,0,0.3)]">
+            
+            {/* Logo with Click x5 Easter Egg */}
+            <button
+              onClick={handleLogoClick}
+              className="font-display font-black text-sm tracking-widest text-white hover:text-accent transition-colors duration-300 pointer-events-auto uppercase"
+              data-cursor="CONNECT"
+            >
+              Sikander
+            </button>
+
+            {/* Nav link coordinates */}
+            <nav className="hidden md:flex items-center gap-6 font-mono text-[9px] text-zinc-400 uppercase tracking-widest">
+              <button onClick={() => handleScrollTo("origin")} className="hover:text-white transition-colors">Origin</button>
+              <button onClick={() => handleScrollTo("missions")} className="hover:text-white transition-colors">Missions</button>
+              <button onClick={() => handleScrollTo("contact")} className="hover:text-white transition-colors">Contact</button>
+              <a href="/missions" className="hover:text-white transition-colors">All Files</a>
+              <a href="/resume" className="hover:text-white transition-colors">Resume</a>
+            </nav>
+
+            {/* Quick terminal key reminder */}
+            <div className="flex items-center gap-1.5 font-mono text-[9px] text-zinc-500 uppercase tracking-widest border-l border-zinc-900 pl-4">
+              <Terminal className="w-3.5 h-3.5 text-accent" />
+              <span className="hidden sm:inline">Press &ldquo;~&rdquo; for console</span>
+              <span className="sm:hidden">&ldquo;~&rdquo;</span>
+            </div>
+
+          </header>
+
+          {/* Logo click easter egg message */}
+          <AnimatePresence>
+            {showEasterEgg && (
+              <motion.div
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                className="fixed top-24 left-1/2 -translate-x-1/2 z-[9985] p-4 bg-zinc-900 border border-primary/50 text-white rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.2)] max-w-sm flex items-center gap-3 font-mono text-xs select-none"
+              >
+                <ShieldAlert className="w-5 h-5 text-accent shrink-0" />
+                <div>
+                  <span className="text-accent font-bold block mb-0.5">UNLOCKED STAGGER</span>
+                  <span>There are still more ideas than time.</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Sections Layout Stack */}
+          <main className="w-full flex flex-col items-center">
+            <Hero />
+            <OriginStory />
+            <Mindset />
+            <SkillsNetwork />
+            <MissionsSection />
+            <Mathematics />
+            <CurrentlyBuilding />
+            <DigitalWorkshop />
+            <ContactForm />
+          </main>
+
+        </motion.div>
+      )}
+    </>
   );
 }
