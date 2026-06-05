@@ -160,6 +160,7 @@ export default function MissionsSection() {
               <div 
                 className="relative flex flex-col justify-between p-6 md:p-8 min-h-[460px] rounded-2xl border border-zinc-900 bg-zinc-950/60 backdrop-blur-md hover:border-accent/40 transition-all duration-500 group select-none shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
                 data-cursor="OPEN"
+                data-project-slug={mission.slug}
               >
                 {/* Folder Top Tab */}
                 <div className="absolute -top-[19px] left-6 h-5 w-24 bg-zinc-950/80 border-t border-x border-zinc-900 rounded-t-lg flex items-center justify-center font-mono text-[8px] text-zinc-500 uppercase tracking-widest select-none pointer-events-none">

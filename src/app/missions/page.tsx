@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, ArrowLeft, ArrowRight } from "lucide-react";
+import { Search, ArrowLeft, ArrowRight, LayoutGrid, List } from "lucide-react";
 import { clsx } from "clsx";
 
 interface Mission {
@@ -86,6 +86,7 @@ const CATEGORIES = ["All", "AI & ML", "Healthcare", "Full Stack", "Security", "Q
 export default function MissionsPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const filteredMissions = MISSIONS.filter((m) => {
     const matchesSearch = 
@@ -168,80 +169,175 @@ export default function MissionsPage() {
             ))}
           </div>
 
-          {/* Search box */}
-          <div className="relative max-w-xs w-full pointer-events-auto">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-650" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search stack, file, code..."
-              className="w-full pl-10 pr-4 py-2.5 bg-zinc-900 border border-zinc-850 focus:border-accent rounded-xl text-xs font-mono text-white placeholder-zinc-600 focus:outline-none focus:ring-0 transition-colors"
-            />
+          {/* Search box & View Toggle */}
+          <div className="flex gap-3 items-center w-full md:max-w-md pointer-events-auto">
+            <div className="relative w-full">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-650" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search stack, file, code..."
+                className="w-full pl-10 pr-4 py-2.5 bg-zinc-900 border border-zinc-850 focus:border-accent rounded-xl text-xs font-mono text-white placeholder-zinc-600 focus:outline-none focus:ring-0 transition-colors"
+              />
+            </div>
+            
+            {/* View Mode Toggle */}
+            <div className="flex border border-zinc-850 rounded-xl overflow-hidden bg-zinc-950 shrink-0">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={clsx(
+                  "p-2.5 transition-colors",
+                  viewMode === "grid" ? "bg-accent/15 text-accent" : "text-zinc-500 hover:text-zinc-300"
+                )}
+                title="Grid View"
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className={clsx(
+                  "p-2.5 transition-colors",
+                  viewMode === "list" ? "bg-accent/15 text-accent" : "text-zinc-500 hover:text-zinc-300"
+                )}
+                title="List View"
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
         </div>
 
-        {/* Catalog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {filteredMissions.length > 0 ? (
-            filteredMissions.map((m) => (
-              <div
-                key={m.code}
-                className="relative p-6 rounded-2xl border border-zinc-900 bg-zinc-950/60 backdrop-blur-sm min-h-[300px] flex flex-col justify-between hover:border-accent/35 transition-all duration-300 group"
-                data-cursor="OPEN"
-              >
-                {/* Folder Top Tab */}
-                <div className="absolute -top-[19px] left-6 h-5 w-20 bg-zinc-950 border-t border-x border-zinc-900 rounded-t-lg flex items-center justify-center font-mono text-[7px] text-zinc-500 uppercase tracking-widest select-none">
-                  {m.code}
-                </div>
+        {/* Catalog List / Grid Conditionally rendered */}
+        {viewMode === "grid" ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            {filteredMissions.length > 0 ? (
+              filteredMissions.map((m) => (
+                <div
+                  key={m.code}
+                  className="relative p-6 rounded-2xl border border-zinc-900 bg-zinc-950/60 backdrop-blur-sm min-h-[300px] flex flex-col justify-between hover:border-accent/35 transition-all duration-300 group"
+                  data-cursor="OPEN"
+                  data-project-slug={m.slug}
+                >
+                  {/* Folder Top Tab */}
+                  <div className="absolute -top-[19px] left-6 h-5 w-20 bg-zinc-950 border-t border-x border-zinc-900 rounded-t-lg flex items-center justify-center font-mono text-[7px] text-zinc-500 uppercase tracking-widest select-none">
+                    {m.code}
+                  </div>
 
-                <div className="flex flex-col gap-4">
-                  <div className="flex justify-between items-start gap-3">
-                    <div className="flex flex-col">
-                      <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest">
-                        {m.category}
+                  <div className="flex flex-col gap-4">
+                    <div className="flex justify-between items-start gap-3">
+                      <div className="flex flex-col">
+                        <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest">
+                          {m.category}
+                        </span>
+                        <h3 className="font-display text-lg font-bold text-white group-hover:text-accent transition-colors">
+                          {m.name}
+                        </h3>
+                      </div>
+                      <span className={clsx("px-2 py-0.5 border rounded-full text-[8px] font-mono tracking-wider uppercase font-semibold", getStatusColor(m.status))}>
+                        {m.status}
                       </span>
-                      <h3 className="font-display text-lg font-bold text-white group-hover:text-accent transition-colors">
-                        {m.name}
-                      </h3>
                     </div>
-                    <span className={clsx("px-2 py-0.5 border rounded-full text-[8px] font-mono tracking-wider uppercase font-semibold", getStatusColor(m.status))}>
-                      {m.status}
-                    </span>
+
+                    <p className="font-sans text-xs text-zinc-400 leading-relaxed">
+                      {m.summary}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {m.stack.map((s) => (
+                        <span key={s} className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-850 font-mono text-[8px] text-zinc-500">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
-                  <p className="font-sans text-xs text-zinc-400 leading-relaxed">
-                    {m.summary}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {m.stack.map((s) => (
-                      <span key={s} className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-850 font-mono text-[8px] text-zinc-500">
-                        {s}
-                      </span>
-                    ))}
+                  <div className="mt-8 pt-4 border-t border-zinc-900/60 flex justify-between items-center select-none">
+                    <span className="font-mono text-[8px] text-zinc-600 uppercase tracking-widest">Confidential</span>
+                    <Link
+                      href={`/missions/${m.slug}`}
+                      className="flex items-center gap-1 font-mono text-[9px] text-white hover:text-accent font-bold tracking-widest uppercase transition-colors group/link"
+                    >
+                      <span>Analyze Mission</span>
+                      <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-0.5" />
+                    </Link>
                   </div>
                 </div>
-
-                <div className="mt-8 pt-4 border-t border-zinc-900/60 flex justify-between items-center select-none">
-                  <span className="font-mono text-[8px] text-zinc-600 uppercase tracking-widest">Confidential</span>
-                  <Link
-                    href={`/missions/${m.slug}`}
-                    className="flex items-center gap-1 font-mono text-[9px] text-white hover:text-accent font-bold tracking-widest uppercase transition-colors group/link"
-                  >
-                    <span>Analyze Mission</span>
-                    <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-0.5" />
-                  </Link>
-                </div>
+              ))
+            ) : (
+              <div className="col-span-full py-16 text-center font-mono text-xs text-zinc-500 border border-dashed border-zinc-900 rounded-2xl select-none">
+                No declassified missions match the active selection criteria.
               </div>
-            ))
-          ) : (
-            <div className="col-span-full py-16 text-center font-mono text-xs text-zinc-500 border border-dashed border-zinc-900 rounded-2xl select-none">
-              No declassified missions match the active selection criteria.
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        ) : (
+          /* List View Layout - Systems Table (Inspired by Oddly Made) */
+          <div className="w-full overflow-x-auto border border-zinc-900 rounded-2xl bg-zinc-950/40 backdrop-blur-sm mt-4 no-scrollbar">
+            <table className="w-full border-collapse font-mono text-left text-xs min-w-[700px] select-none">
+              <thead>
+                <tr className="border-b border-zinc-900 text-zinc-500 uppercase tracking-widest text-[9px] bg-zinc-950/80">
+                  <th className="p-4 pl-6">Code</th>
+                  <th className="p-4">Mission</th>
+                  <th className="p-4">Category</th>
+                  <th className="p-4">Technology Stack</th>
+                  <th className="p-4">Status</th>
+                  <th className="p-4 text-right pr-6">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredMissions.length > 0 ? (
+                  filteredMissions.map((m) => (
+                    <tr 
+                      key={m.code}
+                      className="border-b border-zinc-900/60 hover:bg-zinc-900/20 transition-colors group"
+                      data-cursor="OPEN"
+                      data-project-slug={m.slug}
+                    >
+                      <td className="p-4 pl-6 text-zinc-400 font-bold">{m.code}</td>
+                      <td className="p-4">
+                        <div className="flex flex-col">
+                          <span className="text-white font-bold group-hover:text-accent transition-colors">{m.name}</span>
+                          <span className="text-[10px] text-zinc-500 leading-snug truncate max-w-xs">{m.summary}</span>
+                        </div>
+                      </td>
+                      <td className="p-4 text-zinc-400">{m.category}</td>
+                      <td className="p-4">
+                        <div className="flex flex-wrap gap-1">
+                          {m.stack.map(s => (
+                            <span key={s} className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-850 text-[8px] text-zinc-400">
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        <span className={clsx("px-2 py-0.5 rounded-full text-[8px] tracking-wider uppercase font-semibold border", getStatusColor(m.status))}>
+                          {m.status}
+                        </span>
+                      </td>
+                      <td className="p-4 text-right pr-6">
+                        <Link
+                          href={`/missions/${m.slug}`}
+                          className="inline-flex items-center gap-1 text-[9px] text-white hover:text-accent font-bold tracking-widest uppercase transition-colors"
+                        >
+                          <span>Open</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={6} className="p-8 text-center text-zinc-500">
+                      No declassified missions match the active selection criteria.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
 
       </div>
 

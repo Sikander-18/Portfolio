@@ -3,10 +3,90 @@
 import { useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
 
+interface ProjectPreview {
+  title: string;
+  desc: string;
+  layout: string;
+  tags: string[];
+}
+
+const PROJECT_PREVIEWS: Record<string, ProjectPreview> = {
+  "vitalguard": {
+    title: "VitalGuard Core",
+    desc: "AI Vitals Reasoning Engine",
+    layout: `┌─[ Vitals Stream ]─┐
+│ [ Graph Reasoning ] │
+└─────────┬───────────┘
+          ▼
+   [ Twilio Alert ]`,
+    tags: ["LangGraph", "Twilio API"]
+  },
+  "offline-rag": {
+    title: "Offline RAG Core",
+    desc: "Local Mistral Sandbox",
+    layout: `┌──[ Document Q&A ]──┐
+│  [ Vector Store ]  │
+│  [ Local LLM Core ] │
+└────────────────────┘`,
+    tags: ["Ollama", "ChromaDB"]
+  },
+  "eventsphere": {
+    title: "EventSphere",
+    desc: "Cryptographic Ticketing",
+    layout: `┌─[ Secure Register ]─┐
+│   [ QR Ticket Gen ]  │
+└─────────┬───────────┘
+          ▼
+  [ Instant Check-In ]`,
+    tags: ["Express", "MongoDB"]
+  },
+  "rx-plain": {
+    title: "Rx-Plain Parser",
+    desc: "Bio-Medical Timeline Engine",
+    layout: `┌─[ Biomedical PDF ]─┐
+│  [ Longitudinal ]  │
+│    [ Grid View ]   │
+└────────────────────┘`,
+    tags: ["Python", "NLP"]
+  },
+  "heimdall": {
+    title: "Heimdall Agent",
+    desc: "Socket Sniffer & Alerts",
+    layout: `┌─[ Socket Sniffer ]─┐
+│  [ n8n Automation ] │
+└─────────┬───────────┘
+          ▼
+   [ Trigger Flags ]`,
+    tags: ["Docker", "n8n"]
+  },
+  "skipq": {
+    title: "SkipQ Telemetry",
+    desc: "Queue Delay Optimizer",
+    layout: `┌─[ Patient Queues ]─┐
+│   [ Routing Engine ] │
+└─────────┬───────────┘
+          ▼
+     [ SMS Alerts ]`,
+    tags: ["Spring Boot", "Java"]
+  },
+  "trust-ai": {
+    title: "Trust AI Verify",
+    desc: "Hallucination Validator",
+    layout: `┌──[ Grounding Text ]──┐
+│  [ Hallucination ]   │
+│    [ Evaluation ]    │
+└──────────────────────┘`,
+    tags: ["PyTorch", "Next.js"]
+  }
+};
+
 export default function CustomCursor() {
   const cursorRingRef = useRef<HTMLDivElement | null>(null);
   const cursorDotRef = useRef<HTMLDivElement | null>(null);
+  const previewRef = useRef<HTMLDivElement | null>(null);
+
   const [label, setLabel] = useState<string | null>(null);
+  const [activeProject, setActiveProject] = useState<ProjectPreview | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   
@@ -39,9 +119,17 @@ export default function CustomCursor() {
         const val = cursorEl.getAttribute("data-cursor");
         setLabel(val);
         setIsHovered(true);
+
+        const projectSlug = cursorEl.getAttribute("data-project-slug");
+        if (projectSlug && PROJECT_PREVIEWS[projectSlug]) {
+          setActiveProject(PROJECT_PREVIEWS[projectSlug]);
+        } else {
+          setActiveProject(null);
+        }
       } else {
         setLabel(null);
         setIsHovered(false);
+        setActiveProject(null);
       }
     };
 
@@ -60,6 +148,9 @@ export default function CustomCursor() {
       }
       if (cursorDotRef.current) {
         cursorDotRef.current.style.transform = `translate3d(${mouse.current.x}px, ${mouse.current.y}px, 0) translate(-50%, -50%)`;
+      }
+      if (previewRef.current) {
+        previewRef.current.style.transform = `translate3d(${mouse.current.x + 24}px, ${mouse.current.y + 24}px, 0)`;
       }
 
       rafId = requestAnimationFrame(animate);
@@ -93,7 +184,7 @@ export default function CustomCursor() {
         }}
       >
         {label && (
-          <span className="text-[9px] font-mono font-bold tracking-widest text-background uppercase animate-fade-in select-none">
+          <span className="text-[9px] font-mono font-bold tracking-widest text-accent uppercase animate-fade-in select-none">
             {label}
           </span>
         )}
@@ -110,6 +201,41 @@ export default function CustomCursor() {
           transform: "translate3d(-100px, -100px, 0) translate(-50%, -50%)",
         }}
       />
+
+      {/* Floating project preview card */}
+      <div
+        ref={previewRef}
+        className={clsx(
+          "fixed top-0 left-0 pointer-events-none z-[9998] p-4 rounded-xl bg-zinc-950/90 border border-zinc-850 backdrop-blur-md flex flex-col gap-2.5 w-60 shadow-2xl transition-all duration-300 ease-out origin-top-left",
+          activeProject ? "scale-100 opacity-100" : "scale-75 opacity-0"
+        )}
+        style={{
+          transform: "translate3d(-500px, -500px, 0)"
+        }}
+      >
+        {activeProject && (
+          <>
+            <div className="flex flex-col gap-0.5 select-none">
+              <span className="font-mono text-[8px] text-accent uppercase tracking-widest font-semibold leading-none">system_blueprint</span>
+              <span className="font-display text-sm font-bold text-white tracking-wide">{activeProject.title}</span>
+              <span className="font-mono text-[8px] text-zinc-500 uppercase tracking-widest leading-none mt-0.5">{activeProject.desc}</span>
+            </div>
+
+            {/* Simulated Architecture Map */}
+            <pre className="font-mono text-[9px] text-zinc-400 bg-zinc-900/40 p-2 rounded-lg border border-zinc-900 leading-snug select-none">
+              {activeProject.layout}
+            </pre>
+
+            <div className="flex flex-wrap gap-1 mt-0.5 select-none">
+              {activeProject.tags.map(tag => (
+                <span key={tag} className="font-mono text-[7px] text-zinc-400 bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 }

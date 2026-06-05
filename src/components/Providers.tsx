@@ -7,6 +7,7 @@ import CustomCursor from "./CustomCursor";
 import SoundEffects from "./SoundEffects";
 import KonamiCelebration from "./KonamiCelebration";
 import TerminalOverlay from "./TerminalOverlay";
+import HudOverlay from "./HudOverlay";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
@@ -54,6 +55,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <SoundEffects />
       <KonamiCelebration />
       <TerminalOverlay />
+      <HudOverlay />
       {children}
     </>
   );

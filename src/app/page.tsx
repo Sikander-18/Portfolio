@@ -12,6 +12,7 @@ import Mathematics from "@/components/Mathematics";
 import CurrentlyBuilding from "@/components/CurrentlyBuilding";
 import DigitalWorkshop from "@/components/DigitalWorkshop";
 import ContactForm from "@/components/ContactForm";
+import TextRoll from "@/components/TextRoll";
 import { Terminal, ShieldAlert } from "lucide-react";
 
 export default function Home() {
@@ -61,19 +62,29 @@ export default function Home() {
             {/* Logo with Click x5 Easter Egg */}
             <button
               onClick={handleLogoClick}
-              className="font-display font-black text-sm tracking-widest text-white hover:text-accent transition-colors duration-300 pointer-events-auto uppercase"
+              className="font-display font-black text-sm tracking-widest text-white hover:text-accent transition-colors duration-300 pointer-events-auto uppercase group/btn"
               data-cursor="CONNECT"
             >
-              Sikander
+              <TextRoll text="Sikander" groupClassName="group/btn" />
             </button>
 
             {/* Nav link coordinates */}
             <nav className="hidden md:flex items-center gap-6 font-mono text-[9px] text-zinc-400 uppercase tracking-widest">
-              <button onClick={() => handleScrollTo("origin")} className="hover:text-white transition-colors">Origin</button>
-              <button onClick={() => handleScrollTo("missions")} className="hover:text-white transition-colors">Missions</button>
-              <button onClick={() => handleScrollTo("contact")} className="hover:text-white transition-colors">Contact</button>
-              <a href="/missions" className="hover:text-white transition-colors">All Files</a>
-              <a href="/resume" className="hover:text-white transition-colors">Resume</a>
+              <button onClick={() => handleScrollTo("origin")} className="transition-colors group/link pointer-events-auto">
+                <TextRoll text="Origin" />
+              </button>
+              <button onClick={() => handleScrollTo("missions")} className="transition-colors group/link pointer-events-auto">
+                <TextRoll text="Missions" />
+              </button>
+              <button onClick={() => handleScrollTo("contact")} className="transition-colors group/link pointer-events-auto">
+                <TextRoll text="Contact" />
+              </button>
+              <a href="/missions" className="transition-colors group/link pointer-events-auto">
+                <TextRoll text="All Files" />
+              </a>
+              <a href="/resume" className="transition-colors group/link pointer-events-auto">
+                <TextRoll text="Resume" />
+              </a>
             </nav>
 
             {/* Quick terminal key reminder */}

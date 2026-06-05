@@ -34,19 +34,28 @@ export default function Hero() {
       {/* Empty spacer for top spacing */}
       <div />
 
+      {/* HUD System Map Info (Inspired by Matveyan) */}
+      <div className="absolute top-1/4 right-12 hidden lg:flex flex-col gap-1.5 font-mono text-[9px] text-zinc-600 border border-zinc-900/45 p-4 rounded-xl bg-zinc-950/20 backdrop-blur-sm select-none">
+        <span className="text-zinc-400 font-bold tracking-wider">SYSTEM CONFIG LOG</span>
+        <span>curiosity.engine : initialized</span>
+        <span>stagger_roll     : active (css_stagger)</span>
+        <span>particle_count   : 80 (canvas_2d)</span>
+        <span>viewport_hud     : active (coordinate_node)</span>
+      </div>
+
       {/* Center content */}
       <div className="max-w-5xl mx-auto w-full flex flex-col justify-center items-start gap-8 md:gap-10 my-auto">
         <div className="flex flex-col gap-3 font-mono text-xs md:text-sm tracking-widest text-accent uppercase select-none">
           <span>{"// Welcome to the Digital Workshop"}</span>
         </div>
 
-        {/* Main Display Headline */}
-        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-black tracking-tight text-white leading-[0.9] select-none">
+        {/* Main Display Headline (Inspired by Oddly Made & Wibify Font pairings) */}
+        <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight text-white leading-[0.9] select-none">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="block"
+            className="block font-display"
           >
             I BUILD
           </motion.div>
@@ -54,15 +63,15 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-            className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent"
+            className="block font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-accent via-secondary to-primary pr-4 font-normal"
           >
-            SYSTEMS
+            systems
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="block"
+            className="block font-display"
           >
             FROM IDEAS.
           </motion.div>
