@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background-primary: var(--background-primary);
+  --color-background-secondary: var(--background-secondary);
+  
+  --color-primary-purple: #8B5CF6;
+  --color-secondary-purple: #7C3AED;
+  --color-electric-cyan: #22D3EE;
+  --color-soft-pink: #EC4899;
+  
+  --color-text-dark: var(--text-dark);
+  --color-muted-text: var(--muted-text);
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+
+  --animate-caret-blink: caret-blink 1s step-end infinite;
+  --animate-float-slow: float-slow 15s ease-in-out infinite;
+  --animate-marquee: marquee var(--marquee-duration, 25s) linear infinite;
+  
+  @keyframes caret-blink {
+    from, to { border-color: transparent }
+    50% { border-color: currentColor }
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+:root {
+  --background: #ECEAFF;
+  --foreground: #1E1B4B;
+
+  --background-primary: #ECEAFF;
+  --background-secondary: #DCD8FF;
+  --text-dark: #1E1B4B;
+  --muted-text: #6B7280;
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-bg-hover: rgba(255, 255, 255, 0.28);
+  --glass-border: rgba(255, 255, 255, 0.30);
+  --glass-border-hover: rgba(255, 255, 255, 0.45);
+  --glass-shadow: rgba(139, 92, 246, 0.05);
+}
+
+.dark {
+  --background: #0B081F;
+  --foreground: #F3F4F6;
+
+  --background-primary: #0B081F;
+  --background-secondary: #161233;
+  --text-dark: #F3F4F6;
+  --muted-text: #9CA3AF;
+  --glass-bg: rgba(15, 12, 35, 0.45);
+  --glass-bg-hover: rgba(15, 12, 35, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: initial; /* Essential for Lenis smooth scrolling */
+  background-color: var(--background-primary);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background: linear-gradient(135deg, var(--background-primary) 0%, var(--background-secondary) 100%);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Glassmorphism Panel Utility */
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 12px 40px 0 var(--glass-shadow);
+  transform: translateY(-2px);
+}
+
+/* Claymorphic 3D Button Utility */
+.clay-button {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--text-dark);
+  font-weight: 600;
+  box-shadow: 
+    0px 8px 20px rgba(139, 92, 246, 0.12),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.8),
+    inset 0px -2px 4px rgba(139, 92, 246, 0.15);
+  transition: all 0.2s ease-out, color 0.2s ease-out;
+}
+
+.clay-button:hover {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 
+    0px 10px 24px rgba(139, 92, 246, 0.18),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.9),
+    inset 0px -2px 4px rgba(139, 92, 246, 0.2);
+  transform: translateY(-1px);
+}
+
+.clay-button:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0px 4px 10px rgba(139, 92, 246, 0.1),
+    inset 0px 1px 2px rgba(255, 255, 255, 0.6),
+    inset 0px -1px 2px rgba(139, 92, 246, 0.1);
+}
+
+/* Claymorphic Highlighted Pill (Active state) */
+.clay-button-active {
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  box-shadow: 
+    0px 8px 20px rgba(124, 58, 237, 0.25),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0px -2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.clay-button-active:hover {
+  background: linear-gradient(135deg, #9b70f8 0%, #8b5cf6 100%);
+  box-shadow: 
+    0px 10px 24px rgba(124, 58, 237, 0.35),
+    inset 0px 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0px -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ECEAFF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 4px;
+  border: 2px solid #ECEAFF;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8B5CF6;
+}
+
+/* Lenis Scroll Smoothness styling */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Hide standard cursor when custom cursor active */
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
+/* Hide scrollbar utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

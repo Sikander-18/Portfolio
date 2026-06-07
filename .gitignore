@@ -1,3 +1,5 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # dependencies
 /node_modules
 /.pnp
@@ -28,8 +30,8 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env*.local
+# env files (can opt-in for committing if needed)
+.env*
 
 # vercel
 .vercel
@@ -38,11 +40,20 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# python venv
-/.venv
+# virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env.local
+.env.*.local
 
-# prompt instructions (ignored for repo cleanliness)
-/instructions
-/animations
-/reference_images
-/Resume.pdf
+# local reference folders
+reference_images/
+instructions/
+
+# agent rules
+AGENTS.md
+CLAUDE.md
+
+
