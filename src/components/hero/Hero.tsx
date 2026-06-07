@@ -56,7 +56,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="container mx-auto px-4 z-10 w-full max-w-5xl">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24 z-10 w-full max-w-[1200px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Side: Headline & Bio */}

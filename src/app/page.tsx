@@ -19,7 +19,7 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col w-full min-h-screen px-4 md:px-8 xl:px-12 bg-transparent">
+    <div className="flex flex-col w-full min-h-screen bg-transparent">
       {/* 1. Hero Section */}
       <Hero />
 
@@ -41,7 +41,7 @@ export default function Home() {
         <div className="absolute top-[40%] left-[-10%] w-[380px] h-[380px] bg-electric-cyan/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute bottom-[20%] right-[-5%] w-[350px] h-[350px] bg-soft-pink/5 rounded-full blur-[90px] pointer-events-none" />
 
-        <div className="container mx-auto w-full max-w-5xl relative z-10 flex flex-col gap-16">
+        <div className="container mx-auto px-8 md:px-16 lg:px-24 w-full max-w-[1200px] relative z-10 flex flex-col gap-16">
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto flex flex-col gap-4">
             <span className="font-mono text-[10px] text-primary-purple uppercase tracking-widest font-bold">

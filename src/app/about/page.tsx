@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import ContactForm from "../../components/contact/ContactForm";
+import OriginStory from "../../components/about/OriginStory";
+import Mindset from "../../components/about/Mindset";
 
-export default function ContactPage() {
+export default function AboutPage() {
   return (
     <div className="min-h-screen pt-32 pb-24 px-8 md:px-16 lg:px-24 max-w-[1200px] mx-auto flex flex-col gap-12 text-left">
       <div>
@@ -17,7 +18,8 @@ export default function ContactPage() {
           <span>Return Home</span>
         </Link>
       </div>
-      <ContactForm />
+      <OriginStory />
+      <Mindset />
     </div>
   );
 }

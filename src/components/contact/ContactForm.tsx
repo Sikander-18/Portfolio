@@ -32,7 +32,7 @@ export default function ContactForm() {
       {/* Background blurs */}
       <div className="absolute top-[30%] left-[-5%] w-[420px] h-[420px] bg-soft-pink/10 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 w-full max-w-5xl relative z-10">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24 w-full max-w-[1200px] relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col gap-4">

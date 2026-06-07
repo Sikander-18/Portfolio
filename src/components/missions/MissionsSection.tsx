@@ -93,7 +93,7 @@ export default function MissionsSection() {
       {/* Background decoration */}
       <div className="absolute top-[20%] right-[-10%] w-[380px] h-[380px] bg-primary-purple/10 rounded-full blur-[90px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 w-full max-w-5xl relative z-10">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24 w-full max-w-[1200px] relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col gap-4">

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function ResumePage() {
   return (
-    <div className="min-h-screen pt-32 pb-24 px-6 md:px-12 max-w-5xl mx-auto flex flex-col gap-12 text-left">
+    <div className="min-h-screen pt-32 pb-24 px-8 md:px-16 lg:px-24 max-w-[1200px] mx-auto flex flex-col gap-12 text-left">
       
       {/* Back button */}
       <div>

@@ -2,17 +2,21 @@
 
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { name: "Home", id: "hero" },
-  { name: "About", id: "about" },
-  { name: "Missions", id: "missions" },
-  { name: "Contact", id: "contact" },
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Mission", href: "/mission" },
+  { name: "Workspace", href: "/workspace" },
+  { name: "Resume", href: "/resume" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
+  const pathname = usePathname();
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   // Read theme on mount
@@ -38,36 +42,11 @@ export default function Header() {
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY + 200;
-      for (const item of LINKS) {
-        const el = document.getElementById(item.id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(item.id);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleScrollTo = (id: string) => {
-    setMobileMenuOpen(false);
-    if (window.location.pathname !== "/") {
-      window.location.href = `/#${id}`;
-      return;
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
     }
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    return pathname.startsWith(href);
   };
 
   return (
@@ -76,34 +55,33 @@ export default function Header() {
       <div className="flex justify-between items-center px-6 py-3.5 glass-panel rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.03)] backdrop-blur-md">
         
         {/* Mobile Logo / Title */}
-        <button 
+        <Link 
+          href="/"
           onClick={() => {
-            handleScrollTo("hero");
+            setMobileMenuOpen(false);
             window.dispatchEvent(new CustomEvent("logo-click-event"));
           }}
-          className="xl:hidden font-display font-extrabold text-sm tracking-wide text-text-dark uppercase"
+          className="font-display font-extrabold text-sm tracking-wide text-text-dark uppercase pointer-events-auto"
         >
           SIKANDER
-        </button>
+        </Link>
 
-        {/* Desktop Links (Visible up to xl, hidden beyond to let LeftNav handle it, or visible on md/lg) */}
-        <nav className="hidden md:flex items-center gap-8 mx-auto font-sans text-xs font-semibold text-muted-text">
+        {/* Desktop Links */}
+        <nav className="hidden md:flex items-center gap-6 mx-auto font-sans text-[11px] font-bold text-muted-text">
           {LINKS.map((link) => {
-            const isActive = activeSection === link.id;
+            const active = isActive(link.href);
             return (
-              <button
-                key={link.id}
-                onClick={() => handleScrollTo(link.id)}
+              <Link
+                key={link.href}
+                href={link.href}
                 className={`transition-colors duration-200 cursor-pointer ${
-                  isActive ? "text-primary-purple font-bold" : "hover:text-text-dark"
+                  active ? "text-primary-purple font-extrabold" : "hover:text-text-dark"
                 }`}
               >
                 {link.name}
-              </button>
+              </Link>
             );
           })}
-          <a href="/resume" className="hover:text-text-dark transition-colors">Resume</a>
-          <a href="/workshop" className="hover:text-text-dark transition-colors">Workshop</a>
         </nav>
 
         {/* Right Controls */}
@@ -133,21 +111,20 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden mt-2 p-5 glass-panel rounded-3xl flex flex-col gap-4 font-sans text-sm font-semibold text-muted-text shadow-xl animate-in fade-in slide-in-from-top-3 duration-300">
           {LINKS.map((link) => {
-            const isActive = activeSection === link.id;
+            const active = isActive(link.href);
             return (
-              <button
-                key={link.id}
-                onClick={() => handleScrollTo(link.id)}
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
                 className={`text-left py-2 border-b border-white/5 transition-colors ${
-                  isActive ? "text-primary-purple font-bold" : "hover:text-text-dark"
+                  active ? "text-primary-purple font-bold" : "hover:text-text-dark"
                 }`}
               >
                 {link.name}
-              </button>
+              </Link>
             );
           })}
-          <a href="/resume" className="py-2 border-b border-white/5 hover:text-text-dark">Resume</a>
-          <a href="/workshop" className="py-2 border-b border-white/5 hover:text-text-dark">Workshop</a>
         </div>
       )}
 
