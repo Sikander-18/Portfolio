@@ -89,6 +89,20 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     return () => window.removeEventListener("logo-click-event", handleLogoClick);
   }, []);
 
+  // Scroll to hash on load (after boot loader finishes)
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash) {
+      const hash = window.location.hash;
+      const id = hash.replace("#", "");
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 4000);
+    }
+  }, []);
+
   return (
     <>
       {/* Scrollable Main Content */}

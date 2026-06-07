@@ -60,6 +60,10 @@ export default function Header() {
 
   const handleScrollTo = (id: string) => {
     setMobileMenuOpen(false);
+    if (window.location.pathname !== "/") {
+      window.location.href = `/#${id}`;
+      return;
+    }
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
@@ -67,7 +71,7 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-6 left-6 right-6 z-[95] select-none pointer-events-auto w-[calc(100%-3rem)] max-w-5xl left-1/2 -translate-x-1/2">
+    <header className="fixed top-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-5xl z-[95] select-none pointer-events-auto">
       {/* Top Glass Dock bar */}
       <div className="flex justify-between items-center px-6 py-3.5 glass-panel rounded-full shadow-[0_4px_30px_rgba(0,0,0,0.03)] backdrop-blur-md">
         

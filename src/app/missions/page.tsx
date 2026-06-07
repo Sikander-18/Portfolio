@@ -6,7 +6,7 @@ import MissionsSection from "../../components/missions/MissionsSection";
 
 export default function MissionsPage() {
   return (
-    <div className="min-h-screen py-24 px-4 md:px-8 max-w-5xl mx-auto flex flex-col gap-8 text-left">
+    <div className="min-h-screen pt-32 pb-24 px-6 md:px-12 max-w-5xl mx-auto flex flex-col gap-12 text-left">
       <div>
         <Link
           href="/"
