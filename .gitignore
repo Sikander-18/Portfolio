@@ -43,3 +43,6 @@ next-env.d.ts
 
 # prompt instructions (ignored for repo cleanliness)
 /instructions
+/animations
+/reference_images
+/Resume.pdf
