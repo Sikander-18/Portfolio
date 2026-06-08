@@ -163,14 +163,14 @@ export default function MissionsSection() {
         <div className="text-center max-w-2xl mx-auto mb-24 flex flex-col gap-4">
           <span className="font-mono text-[10px] text-primary-purple uppercase tracking-widest font-extrabold flex items-center justify-center gap-2">
             <Cpu className="w-3.5 h-3.5" />
-            Project Archives
+            System Architectures
           </span>
           <h2 className="font-display font-extrabold text-4xl md:text-6xl text-text-dark leading-tight tracking-tight uppercase">
-            Declassified Missions
+            Production Systems
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary-purple to-soft-pink mx-auto rounded-full mt-4" />
           <p className="text-muted-text text-sm md:text-base font-sans mt-4 leading-relaxed font-medium max-w-lg mx-auto">
-            Technical breakdowns of engineering problems and system architectures, declassified from the development pipeline.
+            Technical breakdowns of engineering problems, structural flow layouts, and production system architectures.
           </p>
         </div>
 
@@ -201,7 +201,7 @@ export default function MissionsSection() {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-white/10 pb-6">
                   <div className="flex flex-col text-left">
                     <span className="font-mono text-[9px] uppercase tracking-widest font-extrabold" style={{ color: mission.color }}>
-                      Mission File 0{mission.num} // RESTRICTED ACCESS
+                      Production System 0{mission.num} // Active Core
                     </span>
                     <h3 className="font-display font-extrabold text-2xl md:text-4xl text-text-dark tracking-tight mt-1">
                       {mission.name}

@@ -5,12 +5,6 @@ import { Compass, BookOpen, Layers, Zap, RotateCw } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface RelatedProject {
-  name: string;
-  action: string;
-  href: string;
-}
-
 interface StageItem {
   phase: string;
   title: string;
@@ -18,7 +12,7 @@ interface StageItem {
   icon: React.ComponentType<{ className?: string }>;
   color: string;
   gradient: string;
-  projects: RelatedProject[];
+  focus: string[];
 }
 
 const STAGES: StageItem[] = [
@@ -29,10 +23,7 @@ const STAGES: StageItem[] = [
     icon: Compass,
     color: "#22D3EE",
     gradient: "from-cyan-400 to-blue-500",
-    projects: [
-      { name: "Heimdall", action: "Analyzing network volumetric spikes", href: "/mission" },
-      { name: "SkipQ", action: "Studying checkout queue latency", href: "/mission" }
-    ]
+    focus: ["Profile memory bottlenecks", "Analyze latency hotspots", "Map system dependency limits"]
   },
   {
     phase: "Learn",
@@ -41,10 +32,7 @@ const STAGES: StageItem[] = [
     icon: BookOpen,
     color: "#8B5CF6",
     gradient: "from-purple-400 to-indigo-500",
-    projects: [
-      { name: "Trust AI", action: "Studying semantic evaluation equations", href: "/mission" },
-      { name: "VitalGuard", action: "Reviewing radiographic CNN classification models", href: "/mission" }
-    ]
+    focus: ["Mathematize core domains", "Read API standards", "Study mathematical equations"]
   },
   {
     phase: "Build",
@@ -53,10 +41,7 @@ const STAGES: StageItem[] = [
     icon: Layers,
     color: "#EC4899",
     gradient: "from-pink-400 to-rose-500",
-    projects: [
-      { name: "EventSphere", action: "Designing transactional relational tables", href: "/mission" },
-      { name: "VitalGuard", action: "Constructing async FastAPI microservices", href: "/mission" }
-    ]
+    focus: ["Code modular platforms", "Design index tables", "Containerize environments"]
   },
   {
     phase: "Improve",
@@ -65,10 +50,7 @@ const STAGES: StageItem[] = [
     icon: Zap,
     color: "#10B981",
     gradient: "from-emerald-400 to-teal-500",
-    projects: [
-      { name: "EventSphere", action: "Optimizing websocket roundtrips to <200ms", href: "/mission" },
-      { name: "Heimdall", action: "Tuning Random Forest decision bounds", href: "/mission" }
-    ]
+    focus: ["Optimize database indexes", "Hyperparameter tuning", "WebSocket sub-200ms targets"]
   },
   {
     phase: "Repeat",
@@ -77,9 +59,7 @@ const STAGES: StageItem[] = [
     icon: RotateCw,
     color: "#F59E0B",
     gradient: "from-amber-400 to-orange-500",
-    projects: [
-      { name: "All Systems", action: "Monitoring live telemetry & planning updates", href: "/workspace" }
-    ]
+    focus: ["Orchestrate metrics logging", "Automate deployment tests", "Iterative architecture reviews"]
   }
 ];
 
@@ -182,29 +162,18 @@ export default function Mindset() {
                         {stage.desc}
                       </p>
 
-                      {/* Associated Case Studies */}
+                      {/* Associated Focus Points */}
                       <div className="flex flex-col gap-2 pt-4 border-t border-white/10">
                         <span className="font-mono text-[8px] uppercase tracking-widest font-extrabold opacity-60">
-                          Philosophy In Action:
+                          Operational Focus:
                         </span>
-                        <div className="flex flex-col gap-2.5">
-                          {stage.projects.map((proj) => (
-                            <Link 
-                              key={proj.name} 
-                              href={proj.href}
-                              className="group/proj flex flex-col text-left pointer-events-auto hover:translate-x-1 transition-transform duration-200"
-                            >
-                              <div className="flex items-baseline gap-1.5">
-                                <span className="font-mono text-[9px] font-bold text-primary-purple group-hover/proj:underline">
-                                  {proj.name}
-                                </span>
-                                <span className="text-[10px] text-muted-text leading-tight font-sans font-medium">
-                                  — {proj.action}
-                                </span>
-                              </div>
-                            </Link>
+                        <ul className="flex flex-col gap-1.5 list-disc list-inside">
+                          {stage.focus.map((item) => (
+                            <li key={item} className="text-muted-text text-[10px] font-sans font-semibold">
+                              {item}
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                       </div>
 
                     </div>
