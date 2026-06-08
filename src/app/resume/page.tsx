@@ -1,24 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import { Download, ArrowLeft, Briefcase, GraduationCap, Award, Settings } from "lucide-react";
+import { Download, Briefcase, GraduationCap, Award, Settings } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ResumePage() {
   return (
-    <div className="min-h-screen pt-32 pb-24 px-8 md:px-16 lg:px-24 max-w-[1200px] mx-auto flex flex-col gap-12 text-left">
-      
-      {/* Back button */}
-      <div>
-        <Link
-          href="/"
-          className="clay-button px-5 py-2.5 rounded-xl text-xs inline-flex items-center gap-2 group pointer-events-auto"
-          data-cursor="OPEN"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          <span>Return Home</span>
-        </Link>
-      </div>
+    <div className="w-full min-h-screen bg-transparent pt-32 pb-24">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24 w-full max-w-[1200px] flex flex-col gap-12 text-left">
 
       {/* Profile Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-white/10">
@@ -166,7 +154,7 @@ export default function ResumePage() {
         </div>
 
       </div>
-
     </div>
+  </div>
   );
 }
