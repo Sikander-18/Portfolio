@@ -1,6 +1,6 @@
 "use client";
 
-import CurrentlyBuilding from "../../components/building/CurrentlyBuilding";
+import CurrentExperiments from "../../components/building/CurrentExperiments";
 import DigitalWorkshop from "../../components/workshop/DigitalWorkshop";
 
 export default function WorkshopPage() {
@@ -19,8 +19,8 @@ export default function WorkshopPage() {
           </p>
         </div>
 
-        {/* Dev progress rings */}
-        <CurrentlyBuilding />
+        {/* Current experiments grid */}
+        <CurrentExperiments />
 
         {/* Workshop widgets grid */}
         <DigitalWorkshop />

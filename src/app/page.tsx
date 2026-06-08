@@ -7,7 +7,7 @@ import OriginStory from "../components/about/OriginStory";
 import Mindset from "../components/about/Mindset";
 import SkillsNetwork from "../components/skills/SkillsNetwork";
 import MissionsSection from "../components/missions/MissionsSection";
-import CurrentlyBuilding from "../components/building/CurrentlyBuilding";
+import CurrentExperiments from "../components/building/CurrentExperiments";
 import DigitalWorkshop from "../components/workshop/DigitalWorkshop";
 import ContactForm from "../components/contact/ContactForm";
 
@@ -56,8 +56,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Currently Building Sub-component */}
-          <CurrentlyBuilding />
+          {/* Current Experiments Sub-component */}
+          <CurrentExperiments />
 
           {/* Digital Workshop Sub-component */}
           <DigitalWorkshop />
